@@ -1,0 +1,50 @@
+version: "3.8"
+
+services:
+  frontend:
+    build:
+      context: ../pokedex-react
+      dockerfile: Dockerfile
+      args:
+        VITE_URL_PATH: "/pokemon"
+    container_name: pokedex-react
+    ports:
+      - "7777:80"
+    depends_on:
+      - backend
+    env_file:
+      - ../pokedex-react/.env
+    networks:
+      - pokedex-net
+
+  backend:
+    build:
+      context: ../pokedex-api
+      dockerfile: Dockerfile
+    container_name: pokedex-api
+    ports:
+      - "8080:8080"
+    depends_on:
+      - dynamodb
+    env_file:
+      - ../pokedex-api/.env
+    networks:
+      - pokedex-net
+
+  dynamodb:
+    image: amazon/dynamodb-local
+    container_name: dynamodb
+    restart: always
+    ports:
+      - "8000:8000"
+    command: ["-jar", "DynamoDBLocal.jar", "-sharedDb"]
+    volumes:
+      - dynamo_data:/home/dynamodblocal
+    networks:
+      - pokedex-net
+
+volumes:
+  dynamo_data:
+
+networks:
+  pokedex-net:
