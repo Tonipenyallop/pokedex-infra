@@ -26,8 +26,9 @@ services:
       - "8080:8080"
     depends_on:
       - dynamodb
-    env_file:
-      - ../pokedex-api/.env
+      # Because I copied in docker file in api, we don't need this part
+    # env_file:
+    #   - ../pokedex-api/.env
     networks:
       - pokedex-net
 
