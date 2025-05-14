@@ -10,7 +10,7 @@ services:
     container_name: pokedex-react
     ports:
       - "80:80"
-      # - "7777:80"
+      - "7777:7777"
     depends_on:
       - backend
     env_file:
