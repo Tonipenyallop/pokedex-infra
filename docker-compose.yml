@@ -9,7 +9,8 @@ services:
         VITE_URL_PATH: "/pokemon"
     container_name: pokedex-react
     ports:
-      - "7777:80"
+      - "80:80"
+      # - "7777:80"
     depends_on:
       - backend
     env_file:
